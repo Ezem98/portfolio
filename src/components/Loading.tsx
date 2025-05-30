@@ -47,7 +47,7 @@ const Loading: React.FC<{ percent: number }> = ({ percent }) => {
     <>
       <div className="loading-header">
         <a href="/#" className="loader-title" data-cursor="disable">
-          <img src="/public/favicon.png" alt="Logo de Ezequiel Machado" />
+          <img src="/favicon.png" alt="Logo de Ezequiel Machado" />
         </a>
         <div className={`loaderGame ${clicked && "loader-out"}`}>
           <div className="loaderGame-container">

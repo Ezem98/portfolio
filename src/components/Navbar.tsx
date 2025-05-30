@@ -43,7 +43,7 @@ const Navbar: React.FC = () => {
     <>
       <div className="header">
         <a href="/#" className="navbar-title" data-cursor="disable">
-          <img src="/public/favicon.png" alt="Logo de Ezequiel Machado" />
+          <img src="/favicon.png" alt="Logo de Ezequiel Machado" />
         </a>
         <a
           href="mailto:ezequielmachado1998@gmail.com"
