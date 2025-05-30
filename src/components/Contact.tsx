@@ -10,21 +10,28 @@ const Contact = () => {
           <div className="contact-box">
             <h4>Email</h4>
             <p>
-              <a href="mailto:example@mail.com" data-cursor="disable">
-                example@mail.com
+              <a
+                href="mailto:ezequielmachado1998@gmail.com"
+                data-cursor="disable"
+              >
+                ezequielmachado1998@gmail.com
               </a>
             </p>
-            <h4>Phone</h4>
+            <h4>Teléfono</h4>
             <p>
-              <a href="tel:+919920782622" data-cursor="disable">
-                +91 99999 99999
+              <a
+                href="https://wa.me/5491132957947"
+                target="_blank"
+                data-cursor="disable"
+              >
+                +54 9 11 3295 7947
               </a>
             </p>
           </div>
           <div className="contact-box">
-            <h4>Social</h4>
+            <h4>Redes Sociales</h4>
             <a
-              href="https://github.com"
+              href="https://github.com/EzeM98"
               target="_blank"
               data-cursor="disable"
               className="contact-social"
@@ -32,14 +39,14 @@ const Contact = () => {
               Github <MdArrowOutward />
             </a>
             <a
-              href="https://www.linkedin.com"
+              href="https://www.linkedin.com/in/ezequiel-machado-089664194"
               target="_blank"
               data-cursor="disable"
               className="contact-social"
             >
               Linkedin <MdArrowOutward />
             </a>
-            <a
+            {/* <a
               href="https://x.com"
               target="_blank"
               data-cursor="disable"
@@ -54,14 +61,15 @@ const Contact = () => {
               className="contact-social"
             >
               Instagram <MdArrowOutward />
-            </a>
+            </a> */}
           </div>
           <div className="contact-box">
             <h2>
-              Designed and Developed <br /> by <span>Moncy Yohannan</span>
+              Diseño Original <br />
+              <span>Moncy Yohannan</span>
             </h2>
             <h5>
-              <MdCopyright /> 2024
+              <MdCopyright /> 2025
             </h5>
           </div>
         </div>

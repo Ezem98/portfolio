@@ -1,29 +1,32 @@
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
+import { useLoading } from "../../context/LoadingProvider";
+import { setProgress } from "../utils/functions";
+import setAnimations from "./utils/animationUtils";
 import setCharacter from "./utils/character";
 import setLighting from "./utils/lighting";
-import { useLoading } from "../../context/LoadingProvider";
-import handleResize from "./utils/resizeUtils";
 import {
+  handleHeadRotation,
   handleMouseMove,
   handleTouchEnd,
-  handleHeadRotation,
   handleTouchMove,
 } from "./utils/mouseUtils";
-import setAnimations from "./utils/animationUtils";
-import { setProgress } from "../Loading";
+import handleResize from "./utils/resizeUtils";
+import { setTextures } from "./utils/textures";
 
-const Scene = () => {
+const Scene: React.FC = () => {
   const canvasDiv = useRef<HTMLDivElement | null>(null);
   const hoverDivRef = useRef<HTMLDivElement>(null);
   const sceneRef = useRef(new THREE.Scene());
   const { setLoading } = useLoading();
 
   const [character, setChar] = useState<THREE.Object3D | null>(null);
+
   useEffect(() => {
-    if (canvasDiv.current) {
-      let rect = canvasDiv.current.getBoundingClientRect();
-      let container = { width: rect.width, height: rect.height };
+    const canvasDivCurrent = canvasDiv.current;
+    if (canvasDivCurrent) {
+      const rect = canvasDivCurrent.getBoundingClientRect();
+      const container = { width: rect.width, height: rect.height };
       const aspect = container.width / container.height;
       const scene = sceneRef.current;
 
@@ -35,7 +38,7 @@ const Scene = () => {
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1;
-      canvasDiv.current.appendChild(renderer.domElement);
+      canvasDivCurrent.appendChild(renderer.domElement);
 
       const camera = new THREE.PerspectiveCamera(14.5, aspect, 0.1, 1000);
       camera.position.z = 10;
@@ -44,25 +47,34 @@ const Scene = () => {
       camera.updateProjectionMatrix();
 
       let headBone: THREE.Object3D | null = null;
-      let screenLight: any | null = null;
+      let screenLight: THREE.Mesh<
+        THREE.BufferGeometry,
+        THREE.MeshStandardMaterial
+      > | null = null;
       let mixer: THREE.AnimationMixer;
 
       const clock = new THREE.Clock();
 
       const light = setLighting(scene);
-      let progress = setProgress((value) => setLoading(value));
+      const progress = setProgress((value) => setLoading(value));
       const { loadCharacter } = setCharacter(renderer, scene, camera);
 
       loadCharacter().then((gltf) => {
         if (gltf) {
           const animations = setAnimations(gltf);
-          hoverDivRef.current && animations.hover(gltf, hoverDivRef.current);
+          if (hoverDivRef.current) animations.hover(gltf, hoverDivRef.current);
           mixer = animations.mixer;
-          let character = gltf.scene;
+          const character = gltf.scene;
+          setTextures(character);
           setChar(character);
           scene.add(character);
+          console.log({ character });
           headBone = character.getObjectByName("spine006") || null;
-          screenLight = character.getObjectByName("screenlight") || null;
+          screenLight =
+            (character.getObjectByName("screenlight") as THREE.Mesh<
+              THREE.BufferGeometry,
+              THREE.MeshStandardMaterial
+            >) || null;
           progress.loaded().then(() => {
             setTimeout(() => {
               light.turnOnLights();
@@ -133,8 +145,8 @@ const Scene = () => {
         window.removeEventListener("resize", () =>
           handleResize(renderer, camera, canvasDiv, character!)
         );
-        if (canvasDiv.current) {
-          canvasDiv.current.removeChild(renderer.domElement);
+        if (canvasDivCurrent) {
+          canvasDivCurrent.removeChild(renderer.domElement);
         }
         if (landingDiv) {
           document.removeEventListener("mousemove", onMouseMove);
@@ -143,6 +155,7 @@ const Scene = () => {
         }
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

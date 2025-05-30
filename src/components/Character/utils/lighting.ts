@@ -1,6 +1,6 @@
+import { gsap } from "gsap";
 import * as THREE from "three";
 import { RGBELoader } from "three-stdlib";
-import { gsap } from "gsap";
 
 const setLighting = (scene: THREE.Scene) => {
   const directionalLight = new THREE.DirectionalLight(0xc7a9ff, 0);
@@ -27,7 +27,13 @@ const setLighting = (scene: THREE.Scene) => {
       scene.environmentRotation.set(5.76, 85.85, 1);
     });
 
-  function setPointLight(screenLight: any) {
+  function setPointLight(
+    screenLight: THREE.Mesh<
+      THREE.BufferGeometry,
+      THREE.MeshStandardMaterial
+    > | null
+  ) {
+    if (!screenLight) return;
     if (screenLight.material.opacity > 0.9) {
       pointLight.intensity = screenLight.material.emissiveIntensity * 20;
     } else {

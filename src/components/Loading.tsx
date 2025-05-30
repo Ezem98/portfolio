@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import "./styles/Loading.css";
 import { useLoading } from "../context/LoadingProvider";
+import "./styles/Loading.css";
 
 import Marquee from "react-fast-marquee";
 
-const Loading = ({ percent }: { percent: number }) => {
+const Loading: React.FC<{ percent: number }> = ({ percent }) => {
   const { setIsLoading } = useLoading();
   const [loaded, setLoaded] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -31,6 +31,7 @@ const Loading = ({ percent }: { percent: number }) => {
         }, 900);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoaded]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
@@ -46,7 +47,7 @@ const Loading = ({ percent }: { percent: number }) => {
     <>
       <div className="loading-header">
         <a href="/#" className="loader-title" data-cursor="disable">
-          Logo
+          EM
         </a>
         <div className={`loaderGame ${clicked && "loader-out"}`}>
           <div className="loaderGame-container">
@@ -62,8 +63,8 @@ const Loading = ({ percent }: { percent: number }) => {
       <div className="loading-screen">
         <div className="loading-marquee">
           <Marquee>
-            <span> A Creative Developer</span> <span>A Creative Designer</span>
-            <span> A Creative Developer</span> <span>A Creative Designer</span>
+            <span> Frontend Developer</span> <span>Backend Developer</span>
+            <span>Fullstack Developer</span> <span>Fullstack Developer</span>
           </Marquee>
         </div>
         <div
@@ -75,13 +76,13 @@ const Loading = ({ percent }: { percent: number }) => {
             <div className="loading-container">
               <div className="loading-content">
                 <div className="loading-content-in">
-                  Loading <span>{percent}%</span>
+                  Cargando <span>{percent}%</span>
                 </div>
               </div>
               <div className="loading-box"></div>
             </div>
             <div className="loading-content2">
-              <span>Welcome</span>
+              <span>Bienvenido</span>
             </div>
           </div>
         </div>
@@ -91,45 +92,3 @@ const Loading = ({ percent }: { percent: number }) => {
 };
 
 export default Loading;
-
-export const setProgress = (setLoading: (value: number) => void) => {
-  let percent: number = 0;
-
-  let interval = setInterval(() => {
-    if (percent <= 50) {
-      let rand = Math.round(Math.random() * 5);
-      percent = percent + rand;
-      setLoading(percent);
-    } else {
-      clearInterval(interval);
-      interval = setInterval(() => {
-        percent = percent + Math.round(Math.random());
-        setLoading(percent);
-        if (percent > 91) {
-          clearInterval(interval);
-        }
-      }, 2000);
-    }
-  }, 100);
-
-  function clear() {
-    clearInterval(interval);
-    setLoading(100);
-  }
-
-  function loaded() {
-    return new Promise<number>((resolve) => {
-      clearInterval(interval);
-      interval = setInterval(() => {
-        if (percent < 100) {
-          percent++;
-          setLoading(percent);
-        } else {
-          resolve(percent);
-          clearInterval(interval);
-        }
-      }, 2);
-    });
-  }
-  return { loaded, percent, clear };
-};

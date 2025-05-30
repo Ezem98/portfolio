@@ -1,14 +1,13 @@
 import "./styles/About.css";
 
-const About = () => {
+const About: React.FC = () => {
   return (
     <div className="about-section" id="about">
       <div className="about-me">
-        <h3 className="title">About Me</h3>
+        <h3 className="title">Sobre Mi</h3>
         <p className="para">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic quis
-          dolores numquam iusto Ratione earum ducimus autem id iure pariatur
-          dolorum quae maiores.
+          +5 años de experiencia. Desarrollador Web y Mobile . De Buenos Aires,
+          Argentina. Master en crear aplicaciones increíbles.
         </p>
       </div>
     </div>

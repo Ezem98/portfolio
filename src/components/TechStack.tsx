@@ -1,15 +1,15 @@
-import * as THREE from "three";
-import { useRef, useMemo, useState, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
 import { EffectComposer, N8AO } from "@react-three/postprocessing";
 import {
   BallCollider,
-  Physics,
-  RigidBody,
   CylinderCollider,
+  Physics,
   RapierRigidBody,
+  RigidBody,
 } from "@react-three/rapier";
+import { useEffect, useMemo, useRef, useState } from "react";
+import * as THREE from "three";
 
 const textureLoader = new THREE.TextureLoader();
 const imageUrls = [
@@ -168,7 +168,9 @@ const TechStack = () => {
 
   return (
     <div className="techstack">
-      <h2> My Techstack</h2>
+      <h2>
+        Mis <span>Tecnologías</span>
+      </h2>
 
       <Canvas
         shadows
